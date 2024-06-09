@@ -22,8 +22,7 @@ jobs:
 
       - name: Setup
         run: |
-          sudo apt install python3
-          sudo pip3 install meson ninja
+          sudo pip install meson ninja
           mkdir -p /tmp/build/lib/pkgconfig
           cp libdrm.pc /tmp/build/lib/pkgconfig/
 
