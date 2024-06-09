@@ -1,19 +1,19 @@
 name: Build for Android
 
 on:
-  [push, pull_request]
+  [push, pull_request, workflow_dispatch]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     strategy:
       matrix:
-        arch: [ "arm32", "aarch64", "x86_64" ]
+        arch: [ "aarch64" ]
       fail-fast: false
 
     name: "Build ${{matrix.arch}}"
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       ANDROID_NDK_HOME: "${ANDROID_SDK_ROOT}/ndk-bundle"
 
@@ -22,7 +22,9 @@ jobs:
 
       - name: Setup
         run: |
-          sudo pip3 install meson ninja
+          sudo apt update
+          sudo apt install -y meson libxrandr-dev libxxf86vm-dev libxcb-*-dev libx11-xcb-dev libxfixes-dev libdrm-dev libx11-dev
+          pip3 install mako ninja
           mkdir -p /tmp/build/lib/pkgconfig
           cp libdrm.pc /tmp/build/lib/pkgconfig/
 
